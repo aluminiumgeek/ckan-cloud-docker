@@ -17,7 +17,7 @@ services:
       - datapusher
     links:
       - datapusher
-    image: viderum/ckan-cloud-docker:ckan-latest-vital-strategies-theme
+    image: viderum/ckan-cloud-docker:<tag>
     build:
       context: ckan
       args:
@@ -32,20 +32,21 @@ services:
           msgfmt ~/venv/src/ckanext-querytool/ckanext/querytool/i18n/fr/LC_MESSAGES/ckanext-querytool.po -o ~/venv/src/ckanext-querytool/ckanext/querytool/i18n/fr/LC_MESSAGES/ckanext-querytool.mo && \
           msgfmt ~/venv/src/ckanext-querytool/ckanext/querytool/i18n/pt_BR/LC_MESSAGES/ckanext-querytool.po -o ~/venv/src/ckanext-querytool/ckanext/querytool/i18n/pt_BR/LC_MESSAGES/ckanext-querytool.mo
     environment:
-      - CKAN_CONFIG_TEMPLATE_PREFIX=vital-strategies-theme-
+      - CKAN_CONFIG_TEMPLATE_PREFIX=sample-theme-
 
   jobs:
-    image: viderum/ckan-cloud-docker:ckan-latest-vital-strategies-theme
+    image: viderum/ckan-cloud-docker:<tag>
     build:
       context: ckan
       args:
+        PIP_INDEX_URL: https://pypi.org/simple
         CKAN_BRANCH: ckan-2.7.3
         POST_INSTALL: |
           install_standard_ckan_extension_github -r keitaroinc/ckanext-s3filestore &&\
           install_standard_ckan_extension_github -r ViderumGlobal/ckanext-querytool &&\
           install_standard_ckan_extension_github -r ckan/ckanext-geoview
     environment:
-      - CKAN_CONFIG_TEMPLATE_PREFIX=vital-strategies-theme-
+      - CKAN_CONFIG_TEMPLATE_PREFIX=sample-theme-
 
   db:
     image: mdillon/postgis
